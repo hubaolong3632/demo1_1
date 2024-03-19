@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo1_1.Mapper.DataMapper">
+<select id="home" resultType="com.example.demo1_1.Model.Home">
+    select si.id,st.name,sc.service_content_name,si.price,si.`status`
+    from service_info as si
+             left join service_content as sc on si.service_content_id=sc.service_content_id
+             left join service_type  as st on si.service_type_id = st.id
+    <where>
+        <if test="v.name!=null and v.name!=''">
+            st.name=#{v.name}
+        </if>
+        <if test="v.service_content_name!=null and v.service_content_name!=''">
+            and sc.service_content_name=#{v.service_content_name}
+        </if>
+        <if test="v.status!=null">
+            and si.status=#{v.status}
+        </if>
+    </where>
+    order by si.create_time desc
+</select>
+</mapper>
