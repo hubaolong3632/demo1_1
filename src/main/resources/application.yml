@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    password: "root"
+    username: "root"
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/db_s1"
+---
+spring:
+  cassandra:
+    port: 1001
