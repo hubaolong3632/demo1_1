@@ -5,7 +5,6 @@ import com.example.demo1_1.Model.Service;
 import com.example.demo1_1.Model.Shoppy;
 import com.example.demo1_1.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -39,7 +38,7 @@ public class DataController {
 
 
     @RequestMapping("/shoppy")
-    public  List<Shoppy> shoppy(Shoppy shoppy){
+    public List<Shoppy> shoppy(Shoppy shoppy){
 
         System.out.println(shoppy);
 
@@ -59,7 +58,7 @@ public class DataController {
 
         //    上传文件
         @PostMapping("/file")
-        public String file(@RequestParam("file")MultipartFile file){
+        public String file(@RequestParam("file") MultipartFile file){
             try{
                 String name = file.getOriginalFilename();
 
@@ -74,6 +73,7 @@ public class DataController {
                 Files.copy(file.getInputStream(),path);
 
                 String URL=ServletUriComponentsBuilder.fromCurrentContextPath().build()+"/"+name;
+
 
 
                 return URL;
