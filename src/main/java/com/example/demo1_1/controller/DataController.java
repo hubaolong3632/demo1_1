@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin("*")
@@ -62,7 +63,9 @@ public class DataController {
             try{
                 String name = file.getOriginalFilename();
 
-//                boolean mkdirs = new File("D:/c1/").mkdirs();
+
+               new File("D:/c1/").mkdirs();
+                name= UUID.randomUUID()+"."+name.split("\\.")[1];
 
 
                 Path path = Paths.get("D:/c1/" + name);
