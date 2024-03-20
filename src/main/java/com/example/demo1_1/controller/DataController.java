@@ -6,10 +6,14 @@ import com.example.demo1_1.Model.Shoppy;
 import com.example.demo1_1.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -53,10 +57,28 @@ public class DataController {
     }
 
         //    上传文件
-        @RequestMapping("/file")
-        public String file(@Ma){
-            System.out.println(v1);
-            return dao.service(v1);
+        @PostMapping("/file")
+        public String file(@RequestParam("file")MultipartFile file){
+            try{
+                String name = file.getOriginalFilename();
+
+//                boolean mkdirs = new File("D:/c1/").mkdirs();
+
+
+                Path path = Paths.get("D:/c1/" + name);
+
+
+                Files.copy(file.getInputStream(),path);
+
+                String URL=ServletUriComponentsBuilder.fromCurrentContextPath().build()+"/"+name;
+
+
+                return URL;
+            }catch (Exception e){
+                return "上传失败"+e.getMessage();
+            }
+
+
 
         }
 
