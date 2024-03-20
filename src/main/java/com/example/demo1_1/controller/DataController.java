@@ -1,16 +1,16 @@
 package com.example.demo1_1.controller;
 
 import com.example.demo1_1.Mapper.DataMapper;
-import com.example.demo1_1.Model.*;
+import com.example.demo1_1.Model.Service;
+import com.example.demo1_1.Model.Shoppy;
+import com.example.demo1_1.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -22,33 +22,43 @@ public class DataController {
     public Boolean login(User user){
         User login = dao.login(user);
         System.out.println(login);
-//
+
 
         if(login!=null){
             return true;
         }else {
             return false;
         }
+
     }
 
 
-    @RequestMapping("/home")
-    public List<Home> home(Home home) {
-        return dao.home(home);
+    @RequestMapping("/shoppy")
+    public  List<Shoppy> shoppy(Shoppy shoppy){
+
+        System.out.println(shoppy);
+
+        List<Shoppy> shoppy1 = dao.shoppy(shoppy);
+
+
+        System.out.println(shoppy1);
+        return shoppy1;
     }
 
+    @RequestMapping("/service")
+    public List<Service> service(Service v1){
+        System.out.println(v1);
+        return dao.service(v1);
 
-    @RequestMapping("/cAndType")
-    public CandT cAndType(){
-
-
-        CandT candT = new CandT();
-        candT.setC(dao.content());
-        candT.setT(dao.type());
-
-
-        return candT;
     }
+
+        //    上传文件
+        @RequestMapping("/file")
+        public String file(@Ma){
+            System.out.println(v1);
+            return dao.service(v1);
+
+        }
 
 
 

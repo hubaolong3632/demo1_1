@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo1_1.Mapper.DataMapper">
+    <select id="shoppy" resultType="com.example.demo1_1.Model.Shoppy"
+            parameterType="com.example.demo1_1.Model.Shoppy">
+
+            select
+                order_info.id,order_info.`code`,
+                order_info.payment_status,
+                order_info.contact_name,
+                order_info.contact_mobile,
+                order_info.order_time,
+                service_type.name
+            from order_info left join service_type on service_type.id=order_info.service_id
+
+              <where>
+
+              <if test="code!=null and code!=''">
+                  order_info.`code`=#{code}
+              </if>
+
+              <if test="payment_status!=null ">
+                  and order_info.payment_status=#{payment_status}
+              </if>
+
+              <if test="name!=null and name!=''">
+                  and service_type.name=#{name}
+              </if>
+
+              <if test="contact_name!=null and contact_name!=''">
+                  and order_info.contact_name like"%${contact_name}%"
+              </if>
+
+              <if test="contact_mobile!=null and contact_mobile!=''">
+                  and order_info.contact_mobile like "%${contact_mobile}%"
+              </if>
+
+              <if test="order_time!=null and order_time!=''">
+                  and order_info.order_time like "${order_time}%"
+              </if>
+              </where>
+
+    </select>
+    <select id="service" resultType="com.example.demo1_1.Model.Service"
+            parameterType="com.example.demo1_1.Model.Service">
+
+        select service_info.id,service_type.name,service_content.service_content_name,service_info.introduction,service_info.price,service_info.status
+        from service_info
+                 left join service_content on service_info.service_content_id=service_content.service_content_id
+                 left join service_type on service_type.id=service_info.service_type_id
+
+                <where>
+                    <if test="service_content_id!=null and service_content_id!=''">
+                        service_info.service_content_id=#{service_content_id}
+                    </if>
+                    <if test="service_type_id!=null and service_type_id!=''">
+                        and service_info.service_type_id=#{service_type_id}
+                    </if>
+                    <if test="status!=null and  status!=''">
+                        and service_info.status=#{status}
+                    </if>
+                </where>
+
+
+
+    </select>
+</mapper>
