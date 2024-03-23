@@ -11,7 +11,12 @@ public class Service {
     public String price;
     public String status;
 
+    public String promotional_image;
+    public String promotional_logo;
+
     public Integer service_content_id;
     public Integer service_type_id;
+    public String details;
+
 
 }

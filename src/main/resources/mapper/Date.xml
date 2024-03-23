@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo1_1.Mapper.DataMapper">
+    <insert id="insertService" parameterType="com.example.demo1_1.Model.InsertService">
+        INSERT INTO `db_s1`.`service_info`(`id`, `service_type_id`, `service_content_id`, `introduction`, `details`, `promotional_image`, `promotional_logo`, `price`, `volunteer_open_flag`, `certificate_flag`, `status`, `create_user_id`, `create_time`, `update_time`)
+        VALUES
+         (null, #{service_type_id}, #{service_content_id}, #{introduction}, #{details}, #{promotional_image}, #{promotional_logo}, #{price}, #{volunteer_open_flag}, #{certificate_flag}, #{status}, #{create_user_id}, #{create_time}, #{update_time});
+    </insert>
     <select id="shoppy" resultType="com.example.demo1_1.Model.Shoppy"
             parameterType="com.example.demo1_1.Model.Shoppy">
 
@@ -44,11 +49,16 @@
     <select id="service" resultType="com.example.demo1_1.Model.Service"
             parameterType="com.example.demo1_1.Model.Service">
 
-        select service_info.id,service_type.name,service_content.service_content_name,service_info.introduction,service_info.price,service_info.status
+        select service_info.id,service_type.name,
+               service_content.service_content_name,
+               service_info.introduction,service_info.price,
+               service_info.status,service_info.promotional_image,
+               service_info.promotional_logo,service_type.id as service_type_id ,service_content.service_content_id as service_content_id,
+        service_info.details
+
         from service_info
                  left join service_content on service_info.service_content_id=service_content.service_content_id
                  left join service_type on service_type.id=service_info.service_type_id
-
                 <where>
                     <if test="service_content_id!=null and service_content_id!=''">
                         service_info.service_content_id=#{service_content_id}
@@ -60,8 +70,7 @@
                         and service_info.status=#{status}
                     </if>
                 </where>
-
-
+        order by create_time desc
 
     </select>
 </mapper>
